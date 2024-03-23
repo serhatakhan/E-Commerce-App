@@ -1,22 +1,23 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import AppColors from '../../theme/colors';
+import React, {Component} from 'react';
+import {View, Text, FlatList} from 'react-native';
+import widgets from '../../widgets';
+import {screenStyle} from '../../styles/screenStyle';
 
 const Home = () => {
+  const renderItem = ({item}) => {
+    // data={widgets} olduğu için onunla alakalı veriler geliyor. içinde {item} var. prop olarak onu istedik. item içindeki componentler var onları render edeceğiz
     return (
-        <View style={styles.container}>
-            <Text>Ana Sayfa</Text>
+        <View>
+            {item.component}
         </View>
-    );
-};
+    )
+  };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor:AppColors.WHITE,
-    },
-});
+  return (
+    <View style={screenStyle.container}>
+      <FlatList data={widgets} renderItem={renderItem} showsVerticalScrollIndicator={false} />
+    </View>
+  );
+};
 
 export default Home;

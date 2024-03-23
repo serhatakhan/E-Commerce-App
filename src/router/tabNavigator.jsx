@@ -7,8 +7,7 @@ import Favorites from '../screens/favorites';
 import Profile from '../screens/profile';
 import AppColors from '../theme/colors';
 import TabIcon from '../components/router/tabIcon';
-import {ShoppingCart} from 'iconsax-react-native';
-import {TouchableOpacity} from 'react-native';
+import HeaderTabRight from '../components/router/headerTabRight';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,13 +26,9 @@ export default function TabNavigator() {
         ),
         tabBarActiveTintColor: AppColors.PRIMARY,
         tabBarInactiveTintColor: AppColors.GRAY,
-        headerRight: ({focused, color, size}) => (
-          <TouchableOpacity style={{marginHorizontal: 14}}>
-            <ShoppingCart size="28" color={AppColors.BLACK} variant="Bold" />
-          </TouchableOpacity>
-        ),
+        headerRight: ({focused, color, size}) => (<HeaderTabRight />),
       })}>
-      <Tab.Screen name={HOME} component={Home} />
+      <Tab.Screen name={HOME} component={Home} options={{headerShadowVisible: false}} />
       <Tab.Screen name={CATEGORIES} component={Categories} />
       <Tab.Screen name={FAVORITES} component={Favorites} />
       <Tab.Screen name={PROFILE} component={Profile} />
