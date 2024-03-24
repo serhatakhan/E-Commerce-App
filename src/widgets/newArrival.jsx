@@ -9,8 +9,9 @@ const NewArrival = () => {
   // gelen verileri state'e at
   const [products, setProducts] = useState([]);
 
+  // {limit: 5} ile en fazla 5 tane ürün getirsin dedik. getRequest'i buna uygun yazdık zaten
   const getNewArrivalProducts = () => {
-    getRequest(CATEGORY_URL + "/men's clothing")
+    getRequest(CATEGORY_URL + "/men's clothing", {limit: 5, sort: "desc"})
       .then(response => setProducts(response.data))
       .catch(err => console.log(err));
   };

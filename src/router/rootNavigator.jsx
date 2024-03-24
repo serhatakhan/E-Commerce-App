@@ -1,9 +1,12 @@
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Cart from '../screens/cart';
-import {CART, TAB} from '../utils/routes';
+import {CART, PRODUCTDETAIL, PRODUCTLIST, TAB} from '../utils/routes';
 import TabNavigator from './tabNavigator';
 import AppColors from '../theme/colors';
+import ProductList from '../screens/product/productList';
+import ProductDetail from '../screens/product/productDetail';
+import HeaderTabRight from '../components/router/headerTabRight';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +25,12 @@ function RootNavigator() {
         component={TabNavigator}
       />
       <Stack.Screen name={CART} component={Cart} />
+      <Stack.Screen options={{
+        headerRight: () => (<HeaderTabRight />),
+      }} name={PRODUCTLIST} component={ProductList} />
+      <Stack.Screen options={{
+        headerRight: () => (<HeaderTabRight />),
+      }} name={PRODUCTDETAIL} component={ProductDetail} />
     </Stack.Navigator>
   );
 }

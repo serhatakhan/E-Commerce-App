@@ -24,7 +24,7 @@ export default function TabNavigator() {
             route={route}
           />
         ),
-        tabBarActiveTintColor: AppColors.PRIMARY,
+        tabBarActiveTintColor: AppColors.BLACK,
         tabBarInactiveTintColor: AppColors.GRAY,
         headerRight: ({focused, color, size}) => (<HeaderTabRight />),
       })}>

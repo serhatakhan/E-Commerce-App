@@ -18,7 +18,7 @@ const HeaderTabRight = () => {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={()=> navigation.navigate(CART)} style={styles.button}>
-        { count > 0 && ( <View style={{backgroundColor: AppColors.PRIMARY, justifyContent: "center", alignItems: "center", width: 20, height: 20, borderRadius:100, position: "absolute", zIndex: 99, right: -9, top: -9}}><Text style={{color: AppColors.WHITE, fontSize: 12, fontWeight: "600"}}>{count}</Text></View> ) }
+        { count > 0 && ( <View style={{backgroundColor: AppColors.PRIMARY, justifyContent: "center", alignItems: "center", width: 20, height: 20, borderRadius:100, position: "absolute", zIndex: 99, right: -9, top: -8}}><Text style={{color: AppColors.BLACK, fontSize: 12, fontWeight: "600"}}>{count}</Text></View> ) }
         <ShoppingCart size="28" color={AppColors.BLACK} />
       </TouchableOpacity>
     </View>
@@ -27,7 +27,6 @@ const HeaderTabRight = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     marginRight: 10,
     alignItems: "center"

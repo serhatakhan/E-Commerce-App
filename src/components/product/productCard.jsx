@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable } from 'react-native';
-import { width } from '../../utils/constants';
 import AppColors from '../../theme/colors';
+import { width } from '../../utils/constants';
 import { Heart } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { PRODUCTDETAIL } from '../../utils/routes';
+import Button from '../ui/button';
 
-const WidgetProductCard = ( {item} ) => {
+const ProductCard = ({item}) => {
     const navigation = useNavigation()
 
     return (
-        // gideceğimiz sayfaya veriyi taşıdık {item: item} yaparak
-        <Pressable onPress={()=> navigation.navigate(PRODUCTDETAIL, {item: item})} style={styles.container}>
+        // Pressable da ToucableOpacity gibi buton yapıyor. Farkı basınca rengi soluklaşmıyor.
+        <Pressable style={styles.container} onPress={()=> navigation.navigate(PRODUCTDETAIL, {item: item})} >
             {/* image içerdeyse require kullanıyoruz ama bu proejedeki gibi dışardan url olarak alıyorsak uri kullanıyoruz. */}
             <Image source={{uri: item.image}} style={{width: width*0.4, height: width*0.3, resizeMode: "contain"}} />
 
@@ -30,16 +31,20 @@ const WidgetProductCard = ( {item} ) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            <View>
+                <Button title={"Add to cart"} />
+            </View>
         </Pressable>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: width*0.4,
+        width: width / 2,
         margin: 5,
-        marginBottom: 10
+        marginBottom: 20,
+        flex: 1
     },
 });
 
-export default WidgetProductCard;
+export default ProductCard;
