@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity} from 'react-native';
 import {screenStyle} from '../../styles/screenStyle';
 import {height, width} from '../../utils/constants';
@@ -9,6 +9,7 @@ import {getRequest} from '../../service/verbs';
 import {PRODUCTS_URL} from '../../service/urls';
 import Spinner from '../../components/ui/spinner';
 import {Heart, Star} from 'iconsax-react-native';
+import StoreContext from '../../context';
 
 // * diğer sayfalardan bu sayyafa yönlendirme yapıp yanında veri de yolladıysak,
 // bu şekilde parametreye {route} yazarak alabiliriz. {item:item} şeklinde item yolladık.
@@ -20,6 +21,10 @@ const ProductDetail = ({route}) => {
   const [product, setProduct] = useState(null);
   // ürün gelen kadar ki yüklenme için state
   const [isLoading, setIsLoading] = useState(false);
+
+  // context'in içindeki addCart fonksiyonuna eriş(aşağıdaki butona ver)
+  const {addCart} = useContext(StoreContext)
+  
 
   const getProductDetail = () => {
     setIsLoading(true);
@@ -36,7 +41,7 @@ const ProductDetail = ({route}) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: AppColors.WHITE}}>
       <View style={screenStyle.container}>
         {/* BURADA BİR LİSTE YOK, SADECE ÜRÜN DETAYLARI VAR. O YÜZDEN SCROLLVIEW */}
         {isLoading ? (
@@ -82,12 +87,8 @@ const ProductDetail = ({route}) => {
       {/* absolute ile burayı screen'in aşağısına sabitlemiş olduk */}
       <View
         style={{
-          position: 'absolute',
-          bottom: 0,
-          paddingBottom: 20,
+          paddingVertical: 10,
           paddingHorizontal: 20,
-          height: height * 0.12,
-          width: width,
           backgroundColor: AppColors.WHITE,
           flexDirection: 'row',
           gap: 10,
@@ -96,10 +97,10 @@ const ProductDetail = ({route}) => {
         }}>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           {/* Counter'ın içindeki sayıyı bu componente taşıdık */}
-          <Counter onChange={value => console.warn(value)} />
+          <Counter onChange={value => console.log(value)} />
         </View>
         <View style={{flex: 2, justifyContent: 'center'}}>
-          <Button title={'Add to cart'} />
+          <Button title={'Add to cart'} onPress={()=> addCart(item)} />
         </View>
       </View>
     </SafeAreaView>

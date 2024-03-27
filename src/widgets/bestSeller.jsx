@@ -23,7 +23,7 @@ const BestSeller = () => {
 
   return (
     <View style={styles.container}>
-      <WidgetTitle title={'Best Seller'} />
+      <WidgetTitle title={'Best Seller'} category="women's clothing" />
       {/* seçilen kategorinin ürünlerini prop olarak yolladık */}
       <CategorySelect onSelect={(value)=> getBestSellerProducts(value)} />
       <FlatList

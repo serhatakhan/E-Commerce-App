@@ -22,7 +22,7 @@ const NewArrival = () => {
 
   return (
     <View style={styles.container}>
-      <WidgetTitle title={'New Arrival'} />
+      <WidgetTitle title={'New Arrival'} category="men's clothing" />
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal

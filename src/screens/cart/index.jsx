@@ -1,22 +1,27 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import AppColors from '../../theme/colors';
+import React, {useContext} from 'react';
+import {View, FlatList} from 'react-native';
+import StoreContext from '../../context';
+import CartCard from '../../components/cart/cartCard';
+import { screenStyle } from '../../styles/screenStyle';
+import Summary from '../../components/cart/summary';
 
 const Cart = () => {
-    return (
-        <View style={styles.container}>
-            <Text>Cart</Text>
-        </View>
-    );
-};
+  // context'in içindeki cart'a eriş. içinde sepete eklenen ürünler var.
+  const {cart} = useContext(StoreContext);
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: AppColors.WHITE,
-    },
-});
+  return (
+    <View style={screenStyle.container}>
+      <FlatList
+        contentContainerStyle={{paddingBottom: 25, marginTop: 5}}
+        showsVerticalScrollIndicator={false}
+        data={cart}
+        // datamız olan cart'ların her birine item demiş oluyoruz renderItem da.
+        renderItem={({item}) => <CartCard item={item} />}
+        keyExtractor={(item)=> item.id}
+      />
+      <Summary />
+    </View>
+  );
+};
 
 export default Cart;

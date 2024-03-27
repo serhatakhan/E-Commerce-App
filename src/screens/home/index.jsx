@@ -8,7 +8,7 @@ const Home = () => {
     // data={widgets} olduğu için onunla alakalı veriler geliyor. içinde {item} var. prop olarak onu istedik. item içindeki componentler var onları render edeceğiz
     return (
         <View>
-            {item.component}
+            {item.isShow && item.component}
         </View>
     )
   };

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable } from 'react-native';
 import AppColors from '../../theme/colors';
 import { width } from '../../utils/constants';
@@ -6,9 +6,13 @@ import { Heart } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { PRODUCTDETAIL } from '../../utils/routes';
 import Button from '../ui/button';
+import StoreContext from '../../context';
 
 const ProductCard = ({item}) => {
     const navigation = useNavigation()
+
+    // context'in içindeki addCart fonksiyonuna eriş
+    const {addCart} = useContext(StoreContext)
 
     return (
         // Pressable da ToucableOpacity gibi buton yapıyor. Farkı basınca rengi soluklaşmıyor.
@@ -32,7 +36,7 @@ const ProductCard = ({item}) => {
                 </View>
             </View>
             <View>
-                <Button title={"Add to cart"} />
+                <Button title={"Add to cart"} onPress={()=> addCart(item)} />
             </View>
         </Pressable>
     );

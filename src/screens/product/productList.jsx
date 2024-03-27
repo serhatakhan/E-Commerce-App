@@ -7,10 +7,14 @@ import {screenStyle} from '../../styles/screenStyle';
 import Spinner from '../../components/ui/spinner';
 import CategorySelect from '../../components/widgets/categorySelect';
 
-const ProductList = () => {
+const ProductList = ({route}) => {
   const [products, setProducts] = useState([]);
   // sayfa yüklenirkenki durumu için state tut.
   const [isLoading, setIsLoading] = useState(false);
+
+  // * Bu sayfaya yollanan category verilerini, route içinden alıp değişkene attık
+  // See All butonları basılan kategoriye göre çalışmış olacak.
+  const productCategory = route?.params?.category
 
   const getAllProducts = (category) => {
     const url = category ? PRODUCTS_URL + `/category/${category}` : PRODUCTS_URL
@@ -26,7 +30,7 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    getAllProducts();
+    getAllProducts(productCategory);
   }, []);
 
   return (

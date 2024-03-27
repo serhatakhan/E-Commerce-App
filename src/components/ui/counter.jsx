@@ -3,7 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AddCircle, MinusCirlce } from 'iconsax-react-native';
 import AppColors from '../../theme/colors';
 
-const Counter = ( {onChange} ) => {
+const Counter = ( {onChange, size=29} ) => {
+    // 'size' proportysi tanımladık. Bu ne için? Bu Counter 
+    // bileşenini farklı sayfalarda çağırdığımızda, çağırdığımız 
+    // sayfaya özel size vermek için böyle yaptık. Çağırdığımız sayfalarda istediğimiz boyuta sokabilelim diye.
+    // * size=29 demek, varsayılan büyüklüğü 29 olsun demek. defaultu 29 olsun yani.
+
     const [count, setCount] = useState(0)
 
     /*
@@ -25,13 +30,13 @@ const Counter = ( {onChange} ) => {
             <TouchableOpacity disabled={count===0} onPress={()=> {
                 setCount(count - 1) 
                 onChange(count-1)}} style={styles.button}>
-                <MinusCirlce size={29} color={AppColors.BLACK} />
+                <MinusCirlce size={size} color={AppColors.BLACK} />
             </TouchableOpacity>
             <Text style={{fontSize: 17, flex: 1, textAlign: "center"}}>{count}</Text>
             <TouchableOpacity disabled={count===5} onPress={()=> {
                 setCount(count + 1) 
                 onChange(count + 1)}} style={styles.button}>
-                <AddCircle size={29} color={AppColors.BLACK} variant="Bold" />
+                <AddCircle size={size} color={AppColors.BLACK} variant="Bold" />
             </TouchableOpacity>
         </View>
     );
