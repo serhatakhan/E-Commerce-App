@@ -15,7 +15,7 @@ const Provider = ({children}) => {
     }
 
     return (
-        <StoreContext.Provider value={{cart, addCart}}>
+        <StoreContext.Provider value={{cart, addCart, isLogin, setIsLogin}}>
             {children}
         </StoreContext.Provider>
     );

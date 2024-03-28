@@ -11,7 +11,7 @@ const Introduction = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/nike-4.png')} style={styles.image} />
+      <Image source={require('../assets/images/nike-4.png')} style={styles.image} />
       <TouchableOpacity onPress={()=> navigation.navigate(PRODUCTLIST)} style={{position: "absolute", bottom: 24, right: 12, backgroundColor:AppColors.SOFTGRAY, width: width*0.4, height: height*0.044, justifyContent: "center", alignItems: "center", borderRadius: 10, borderWidth: 2, borderColor: AppColors.BLACK}}>
         <Text style={{color: AppColors.BLACK, fontSize: 16, fontWeight: "600"}}>Shop Now</Text>
       </TouchableOpacity>

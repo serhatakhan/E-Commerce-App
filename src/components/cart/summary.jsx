@@ -3,15 +3,26 @@ import { View, Text, StyleSheet, Alert } from 'react-native';
 import Button from '../ui/button';
 import AppColors from '../../theme/colors';
 import StoreContext from '../../context';
+import { useNavigation } from '@react-navigation/native';
+import { CHECKOUT, LOGIN } from '../../utils/routes';
 
 const Summary = () => {
     const {isLogin} = useContext(StoreContext)
 
+    const navigation = useNavigation()
+
     const checkOut = () => {
         if(isLogin){
-
+            navigation.navigate(CHECKOUT)
         }else {
-            Alert.alert("Lütfen giriş yapınız")
+            Alert.alert('Login', 'You must login to purchase products.', [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {text: 'Login', onPress: () => navigation.navigate(LOGIN)},
+              ]);
         }
     }
 
