@@ -1,18 +1,34 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable, Alert } from 'react-native';
 import AppColors from '../../theme/colors';
 import { width } from '../../utils/constants';
-import { Heart } from 'iconsax-react-native';
+import { Heart, HeartAdd } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
-import { PRODUCTDETAIL } from '../../utils/routes';
+import { LOGIN, PRODUCTDETAIL } from '../../utils/routes';
 import Button from '../ui/button';
 import StoreContext from '../../context';
 
 const ProductCard = ({item}) => {
     const navigation = useNavigation()
 
-    // context'in içindeki addCart fonksiyonuna eriş
-    const {addCart} = useContext(StoreContext)
+    // context'in içindeki addCart ve addToFavorites fonksiyonlarına eriş
+    const {addCart, addToFavorites, isLogin} = useContext(StoreContext)
+
+    // kullanıcı giriş yapmış mı yapmamış mı
+    const checkIsLogin = () => {
+        if(isLogin){
+            addToFavorites(item)
+        }else {
+            Alert.alert('Login', 'Log in to add to favorites.', [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {text: 'Login', onPress: () => navigation.navigate(LOGIN)},
+              ]);
+        }
+    }
 
     return (
         // Pressable da ToucableOpacity gibi buton yapıyor. Farkı basınca rengi soluklaşmıyor.
@@ -29,12 +45,18 @@ const ProductCard = ({item}) => {
 
                     <Text style={{fontWeight: "700", marginVertical: 5, fontSize: 14, color: AppColors.BLACK}}>${item.price}</Text>
                 </View>
+
                 <View style={{flex:1, justifyContent: "center", alignItems:"center"}}>
-                    <TouchableOpacity>
-                        <Heart size={20} color={AppColors.RED} variant='Bold' />
+                    <TouchableOpacity onPress={()=> checkIsLogin()} >
+                        {
+                            item.favorite 
+                            ? <Heart size={20} color={AppColors.RED} variant='Bold' />
+                            : <HeartAdd size={20} color={AppColors.BLACK} />
+                        }
                     </TouchableOpacity>
                 </View>
             </View>
+
             <View>
                 <Button title={"Add to cart"} onPress={()=> addCart(item)} />
             </View>

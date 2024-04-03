@@ -1,13 +1,32 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable } from 'react-native';
+import React, { Component, useContext } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable, Alert } from 'react-native';
 import { width } from '../../utils/constants';
 import AppColors from '../../theme/colors';
-import { Heart } from 'iconsax-react-native';
+import { Heart, HeartAdd } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
-import { PRODUCTDETAIL } from '../../utils/routes';
+import { LOGIN, PRODUCTDETAIL } from '../../utils/routes';
+import StoreContext from '../../context';
 
 const WidgetProductCard = ( {item} ) => {
     const navigation = useNavigation()
+
+    const {addToFavorites, isLogin} = useContext(StoreContext)
+
+       // kullanıcı giriş yapmış mı yapmamış mı
+       const checkIsLogin = () => {
+        if(isLogin){
+            addToFavorites(item)
+        }else {
+            Alert.alert('Login', 'Log in to add to favorites.', [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {text: 'Login', onPress: () => navigation.navigate(LOGIN)},
+              ]);
+        }
+    }
 
     return (
         // gideceğimiz sayfaya veriyi taşıdık {item: item} yaparak
@@ -25,8 +44,11 @@ const WidgetProductCard = ( {item} ) => {
                     <Text style={{fontWeight: "700", marginVertical: 5, fontSize: 14, color: AppColors.BLACK}}>${item.price}</Text>
                 </View>
                 <View style={{flex:1, justifyContent: "center", alignItems:"center"}}>
-                    <TouchableOpacity>
-                        <Heart size={20} color={AppColors.RED} variant='Bold' />
+                    <TouchableOpacity onPress={()=> checkIsLogin()} >
+                        {   item.favorite 
+                            ? <Heart size={20} color={AppColors.RED} variant='Bold' />
+                            : <HeartAdd size={20} color={AppColors.BLACK} />
+                        }
                     </TouchableOpacity>
                 </View>
             </View>

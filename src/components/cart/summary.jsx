@@ -7,9 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import { CHECKOUT, LOGIN } from '../../utils/routes';
 
 const Summary = () => {
-    const {isLogin} = useContext(StoreContext)
+    const {isLogin, cart} = useContext(StoreContext)
 
     const navigation = useNavigation()
+
+    // toplam fiyat hesapla
+    function totalPrice(){
+        return cart.reduce((acc, product)=> acc + product.price, 0) 
+    }
 
     const checkOut = () => {
         if(isLogin){
@@ -45,7 +50,7 @@ const Summary = () => {
 
             <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 20}}>
                 <Text style={{color: AppColors.GRAY, fontWeight: "800"}}>Total</Text>
-                <Text style={{fontWeight: "700"}}>$800</Text>
+                <Text style={{fontWeight: "700"}}>${totalPrice().toFixed(2)}</Text>
             </View>
 
             <Button title={"Check out"} onPress={()=> checkOut()} />

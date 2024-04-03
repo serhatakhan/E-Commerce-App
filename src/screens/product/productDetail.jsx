@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity, Alert} from 'react-native';
 import {screenStyle} from '../../styles/screenStyle';
 import {height, width} from '../../utils/constants';
 import AppColors from '../../theme/colors';
@@ -8,12 +8,13 @@ import Counter from '../../components/ui/counter';
 import {getRequest} from '../../service/verbs';
 import {PRODUCTS_URL} from '../../service/urls';
 import Spinner from '../../components/ui/spinner';
-import {Heart, Star} from 'iconsax-react-native';
+import {Heart, HeartAdd, Star} from 'iconsax-react-native';
 import StoreContext from '../../context';
+import { LOGIN } from '../../utils/routes';
 
 // * diğer sayfalardan bu sayyafa yönlendirme yapıp yanında veri de yolladıysak,
 // bu şekilde parametreye {route} yazarak alabiliriz. {item:item} şeklinde item yolladık.
-const ProductDetail = ({route}) => {
+const ProductDetail = ({route, navigation}) => {
   // item'a böyle erişiyoruz. ? koymayı unutma. item gelmeyedebilir.
   const {item} = route?.params;
 
@@ -23,7 +24,24 @@ const ProductDetail = ({route}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // context'in içindeki addCart fonksiyonuna eriş(aşağıdaki butona ver)
-  const {addCart} = useContext(StoreContext)
+  const {addCart, addToFavorites, isLogin} = useContext(StoreContext)
+
+
+  // kullanıcı giriş yapmış mı yapmamış mı
+  const checkIsLogin = () => {
+    if(isLogin){
+        addToFavorites(item)
+    }else {
+        Alert.alert('Login', 'Log in to add to favorites.', [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {text: 'Login', onPress: () => navigation.navigate(LOGIN)},
+          ]);
+    }
+}
   
 
   const getProductDetail = () => {
@@ -71,8 +89,11 @@ const ProductDetail = ({route}) => {
                 </View>
 
                 <View style={{flex: 1, justifyContent: "center", alignItems: "flex-end", padding: 5}}>
-                  <TouchableOpacity style={{backgroundColor: AppColors.SOFTGRAY, padding: 5, borderRadius: 100}}>
-                    <Heart size={28} color={AppColors.RED} variant="Bold" />
+                  <TouchableOpacity onPress={()=> checkIsLogin()} style={{backgroundColor: AppColors.SOFTGRAY, padding: 5, borderRadius: 100}}>
+                        {   item.favorite 
+                            ? <Heart size={20} color={AppColors.RED} variant='Bold' />
+                            : <HeartAdd size={20} color={AppColors.BLACK} />
+                        }
                   </TouchableOpacity>
                 </View>
               </View>
