@@ -37,3 +37,11 @@ This project is built using React Native and is designed to provide a seamless s
 * Context API
 * Iconsax
 * UI Kitten
+
+## Preview
+
+https://github.com/serhatakhan/E-Commerce-App/assets/147662915/c803837b-2dca-45a6-a70c-071e739e0c58
+
+
+
+
